@@ -72,6 +72,18 @@ const routes = [
       }
     },
   },
+  {
+    path: "/maps",
+    name: "Maps",
+    component: () => import("../views/MapView.vue"),
+    beforeEnter: (to, from, next) => {
+      if (!store.state.auth.token) {
+        next("/login");
+      } else {
+        next();
+      }
+    },
+  },
 ];
 
 const router = createRouter({
