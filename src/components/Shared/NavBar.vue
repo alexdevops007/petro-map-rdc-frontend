@@ -2,8 +2,8 @@
   <nav class="bg-gray-900 p-4 shadow-lg">
     <div class="container mx-auto flex justify-between items-center">
       <!-- Logo -->
-      <div class="text-white text-2xl font-bold">
-        <i class="fa-solid fa-map"></i> PetroMap RDC
+      <div class="text-white text-2xl font-bold flex items-center">
+        <i class="fa-solid fa-map mr-2"></i> PetroMap RDC
       </div>
 
       <!-- Mobile Menu Toggle -->
@@ -19,16 +19,25 @@
           <router-link
             to="/dashboard"
             class="text-white hover:text-gray-400 transition-colors"
-            ><i class="fa-solid fa-gauge"></i> Tableau de Bord</router-link
           >
+            <i class="fa-solid fa-gauge"></i> Tableau de Bord
+          </router-link>
         </li>
         <li>
           <router-link
             to="/users"
             class="text-white hover:text-gray-400 transition-colors"
-            ><i class="fa-solid fa-user"></i> Gestion des
-            utilisateurs</router-link
           >
+            <i class="fa-solid fa-user"></i> Gestion des utilisateurs
+          </router-link>
+        </li>
+        <li>
+          <router-link
+            to="/concessions"
+            class="text-white hover:text-gray-400 transition-colors"
+          >
+            <i class="fa-solid fa-building"></i> Concessions
+          </router-link>
         </li>
       </ul>
 
@@ -56,16 +65,25 @@
         <router-link
           to="/dashboard"
           class="block text-white hover:text-gray-400 transition-colors"
-          ><i class="fa-solid fa-gauge"></i> Tableau de Bord</router-link
         >
+          <i class="fa-solid fa-gauge"></i> Tableau de Bord
+        </router-link>
       </li>
       <li>
         <router-link
           to="/users"
           class="block text-white hover:text-gray-400 transition-colors"
-          ><i class="fa-solid fa-user"></i> Gestion des
-          utilisateurs</router-link
         >
+          <i class="fa-solid fa-user"></i> Gestion des utilisateurs
+        </router-link>
+      </li>
+      <li>
+        <router-link
+          to="/concessions"
+          class="block text-white hover:text-gray-400 transition-colors"
+        >
+          <i class="fa-solid fa-building"></i> Concessions
+        </router-link>
       </li>
       <li v-if="user" class="border-t border-gray-700 pt-2 text-sm">
         <span class="text-white block">
@@ -93,10 +111,10 @@ export default {
     };
   },
   computed: {
-    ...mapState("auth", ["user"]),
+    ...mapState("auth", ["user"]), // Récupère l'utilisateur connecté depuis Vuex
   },
   methods: {
-    ...mapActions("auth", ["logout"]),
+    ...mapActions("auth", ["logout"]), // Action pour déconnecter l'utilisateur
     async handleLogout() {
       await this.logout(); // Exécute la déconnexion
       this.$router.push("/"); // Redirige vers la page d'accueil après déconnexion

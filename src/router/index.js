@@ -36,6 +36,42 @@ const routes = [
       }
     },
   },
+  {
+    path: "/concessions",
+    name: "Concessions",
+    component: () => import("../views/ConcessionsView.vue"),
+    beforeEnter: (to, from, next) => {
+      if (!store.state.auth.token) {
+        next("/login");
+      } else {
+        next();
+      }
+    },
+  },
+  {
+    path: "/concessions/new",
+    name: "NewConcession",
+    component: () => import("../components/Concessions/ConcessionForm.vue"),
+    beforeEnter: (to, from, next) => {
+      if (!store.state.auth.token) {
+        next("/login");
+      } else {
+        next();
+      }
+    },
+  },
+  {
+    path: "/concessions/edit/:id",
+    name: "EditConcession",
+    component: () => import("../components/Concessions/ConcessionForm.vue"),
+    beforeEnter: (to, from, next) => {
+      if (!store.state.auth.token) {
+        next("/login");
+      } else {
+        next();
+      }
+    },
+  },
 ];
 
 const router = createRouter({
