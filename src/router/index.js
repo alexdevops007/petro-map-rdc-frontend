@@ -73,6 +73,17 @@ const routes = [
     },
   },
   {
+    path: "/concessions/:id",
+    component: () => import("../components/Concessions/ConcessionDetails.vue"),
+    beforeEnter: (to, from, next) => {
+      if (!store.state.auth.token) {
+        next("/login");
+      } else {
+        next();
+      }
+    },
+  },
+  {
     path: "/maps",
     name: "Maps",
     component: () => import("../views/MapView.vue"),

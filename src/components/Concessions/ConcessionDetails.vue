@@ -19,6 +19,7 @@ export default {
   },
   mounted() {
     this.fetchConcessionDetails(this.$route.params.id);  // Récupérer les détails de la concession à partir de l'ID dans l'URL
+    console.log(this.concessionDetails)
   },
 };
 </script>
