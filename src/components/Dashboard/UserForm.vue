@@ -84,7 +84,7 @@ export default {
   data() {
     return {
       userData: {
-        _id: this.user?._id || null, // Assurez-vous que l'ID est récupéré lors de la modification
+        _id: this.user?._id || null,
         firstName: this.user?.firstName || "",
         lastName: this.user?.lastName || "",
         email: this.user?.email || "",
@@ -96,7 +96,7 @@ export default {
   },
   computed: {
     isEditMode() {
-      return !!this.user;
+      return !!this.user && !!this.user._id; // On vérifie si l'ID existe vraiment pour le mode édition
     },
   },
   methods: {
