@@ -1,29 +1,22 @@
 <template>
-  <nav class="bg-blue p-4 text-white">
+  <nav class="bg-gray-800 p-4">
     <div class="container mx-auto flex justify-between items-center">
-      <div class="text-lg font-bold">PetroMap RDC</div>
-      <button @click="toggleMenu" class="lg:hidden">
-        <i class="fas fa-bars"></i>
-      </button>
+      <div class="text-white text-2xl font-bold">PetroMap RDC</div>
+      <div class="md:hidden">
+        <button @click="toggleMenu" class="text-white focus:outline-none">
+          <i class="fas fa-bars"></i>
+        </button>
+      </div>
       <ul
-        :class="{ hidden: !isMenuOpen, flex: isMenuOpen }"
-        class="lg:flex space-x-4"
+        :class="['md:flex', menuOpen ? 'block' : 'hidden']"
+        class="w-full md:w-auto md:space-x-6"
       >
         <li>
-          <router-link class="hover:text-yellow-500" to="/"
-            >Accueil</router-link
+          <router-link to="/dashboard" class="text-white hover:text-gray-400"
+            >Tableau de Bord</router-link
           >
         </li>
-        <li>
-          <router-link class="hover:text-yellow-500" to="/users"
-            >Utilisateurs</router-link
-          >
-        </li>
-        <li>
-          <router-link class="hover:text-yellow-500" to="/dashboard"
-            >Tableau de bord</router-link
-          >
-        </li>
+        <!-- Autres liens -->
       </ul>
     </div>
   </nav>
@@ -33,13 +26,15 @@
 export default {
   data() {
     return {
-      isMenuOpen: false,
+      menuOpen: false,
     };
   },
   methods: {
     toggleMenu() {
-      this.isMenuOpen = !this.isMenuOpen;
+      this.menuOpen = !this.menuOpen;
     },
   },
 };
 </script>
+
+<style scoped></style>
