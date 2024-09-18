@@ -35,7 +35,7 @@
               <i class="fa-solid fa-pen"></i>
             </button>
             <button
-              @click="deleteConcession(concession._id)"
+              @click="HandleDeleteConcession(concession._id)"
               class="text-red-600 hover:text-red-800"
             >
               <i class="fa-solid fa-trash"></i>
@@ -62,7 +62,7 @@ export default {
     editConcession(id) {
       this.$router.push(`/concessions/edit/${id}`);
     },
-    async deleteConcession(id) {
+    async HandleDeleteConcession(id) {
       await this.deleteConcession(id);
     },
   },
