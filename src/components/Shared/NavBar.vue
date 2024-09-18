@@ -57,7 +57,7 @@
         <button
           @click="handleLogout"
           class="bg-red-500 hover:bg-red-700 text-white py-2 px-4 rounded transition-all"
-        >
+        ><i class="fa-solid fa-right-from-bracket"></i> 
           Déconnexion
         </button>
       </div>
@@ -104,7 +104,7 @@
         <button
           @click="handleLogout"
           class="w-full mt-2 bg-red-500 hover:bg-red-700 text-white py-2 px-4 rounded transition-all"
-        >
+        ><i class="fa-solid fa-right-from-bracket"></i> 
           Déconnexion
         </button>
       </li>

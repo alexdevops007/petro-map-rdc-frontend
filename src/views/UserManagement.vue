@@ -1,21 +1,28 @@
 <template>
-  <div class="container mx-auto">
-    <h1 class="text-3xl font-bold mb-6">Gestion des Utilisateurs</h1>
+  <div class="container mx-auto p-4 lg:p-8">
+    <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
+      Gestion des Utilisateurs
+    </h1>
 
     <button
       class="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-700 mb-6"
       @click="createNewUser"
     >
-      <i class="fas fa-user-plus"></i> Ajouter un utilisateur
+      <i class="fa-solid fa-user"></i> Ajouter un utilisateur
     </button>
 
-    <UsersList @edit-user="selectUser" />
+    <!-- Liste des utilisateurs, responsive -->
+    <div class="overflow-x-auto">
+      <UsersList @edit-user="selectUser" />
+    </div>
 
+    <!-- Formulaire de l'utilisateur, responsive -->
     <UserForm
       v-if="selectedUser"
       :user="selectedUser"
       @save-user="handleSaveUser"
       @cancel="clearSelection"
+      class="mt-6"
     />
   </div>
 </template>
@@ -49,14 +56,11 @@ export default {
     },
     async handleSaveUser({ user, isEditMode }) {
       if (isEditMode) {
-        // Mise à jour de l'utilisateur existant avec PUT
         await this.$store.dispatch("users/updateUser", user);
       } else {
-        // Création d'un nouvel utilisateur avec POST
         await this.$store.dispatch("users/createUser", user);
       }
 
-      // Réinitialiser le formulaire après la sauvegarde
       this.selectedUser = null;
     },
     clearSelection() {

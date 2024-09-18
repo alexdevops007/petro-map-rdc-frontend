@@ -1,55 +1,59 @@
 <template>
-  <div class="container mx-auto py-6">
+  <div class="container mx-auto py-6 px-4 sm:px-6 lg:px-8">
     <h1 class="text-2xl font-bold mb-4">Gestion des Utilisateurs</h1>
 
-    <!-- Affiche un message d'erreur si une erreur est présente -->
-    <div v-if="error" class="text-red-500">{{ error }}</div>
+    <!-- Affichage d'un message d'erreur s'il y en a -->
+    <div v-if="error" class="text-red-500 mb-4">{{ error }}</div>
 
-    <!-- Condition v-if et v-else -->
+    <!-- Condition pour afficher le tableau ou un message -->
     <div v-if="users.length > 0">
-      <table class="table-auto w-full text-left">
-        <thead>
-          <tr class="bg-gray-200">
-            <th class="px-4 py-2">Nom</th>
-            <th class="px-4 py-2">Email</th>
-            <th class="px-4 py-2">Rôle</th>
-            <th class="px-4 py-2">Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="user in users" :key="user._id">
-            <td class="border px-4 py-2">
-              {{ user.firstName }} {{ user.lastName }}
-            </td>
-            <td class="border px-4 py-2">{{ user.email }}</td>
+      <div class="overflow-x-auto">
+        <table class="table-auto w-full bg-white border border-gray-300">
+          <thead>
+            <tr class="bg-gray-200 text-left text-xs sm:text-sm uppercase text-gray-600">
+              <th class="px-4 py-2">Nom</th>
+              <th class="px-4 py-2">Email</th>
+              <th class="px-4 py-2">Rôle</th>
+              <th class="px-4 py-2">Actions</th>
+            </tr>
+          </thead>
+          <tbody class="text-gray-600 text-xs sm:text-sm">
+            <tr v-for="user in users" :key="user._id" class="border-b border-gray-200 hover:bg-gray-100">
+              <td class="px-4 py-2">
+                {{ user.firstName }} {{ user.lastName }}
+              </td>
+              <td class="px-4 py-2">{{ user.email }}</td>
 
-            <!-- Traduction des rôles en français -->
-            <td class="border px-4 py-2">
-              <span v-if="user.role === 'Admin'">Administrateur</span>
-              <span v-else-if="user.role === 'Supervisor'">Superviseur</span>
-              <span v-else-if="user.role === 'Investor'">Investisseur</span>
-              <span v-else>Citoyen(ne)</span>
-            </td>
+              <!-- Traduction des rôles en français -->
+              <td class="px-4 py-2">
+                <span v-if="user.role === 'Admin'">Administrateur</span>
+                <span v-else-if="user.role === 'Supervisor'">Superviseur</span>
+                <span v-else-if="user.role === 'Investor'">Investisseur</span>
+                <span v-else>Citoyen(ne)</span>
+              </td>
 
-            <td class="border px-4 py-2">
-              <button
-                @click="editUser(user)"
-                class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700 mr-2"
-              >
-                <i class="fas fa-edit"></i>
-              </button>
-              <button
-                @click="deleteUser(user._id)"
-                class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-700"
-              >
-                <i class="fas fa-trash"></i>
-              </button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+              <!-- Boutons d'actions -->
+              <td class="px-4 py-2 flex justify-center sm:justify-start">
+                <button
+                  @click="editUser(user)"
+                  class="bg-blue-500 text-white px-2 sm:px-4 py-1 sm:py-2 rounded hover:bg-blue-700 mr-2"
+                >
+                  <i class="fas fa-edit"></i>
+                </button>
+                <button
+                  @click="deleteUser(user._id)"
+                  class="bg-red-500 text-white px-2 sm:px-4 py-1 sm:py-2 rounded hover:bg-red-700"
+                >
+                  <i class="fas fa-trash"></i>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
-    <!-- Si aucun utilisateur n'est présent -->
+
+    <!-- Si aucun utilisateur n'est trouvé -->
     <div v-else>
       <p class="text-gray-500">Aucun utilisateur trouvé.</p>
     </div>
@@ -73,6 +77,11 @@ export default {
     editUser(user) {
       this.$emit("edit-user", user);
     },
+    deleteUser(userId) {
+      this.deleteUser(userId).then(() => {
+        this.fetchUsers(); // Rafraîchit la liste après suppression
+      });
+    },
   },
   mounted() {
     this.fetchUsers();
@@ -80,4 +89,6 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+/* Vous pouvez ajouter des styles spécifiques ici si nécessaire */
+</style>
