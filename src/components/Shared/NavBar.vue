@@ -116,6 +116,20 @@
           <i class="fa-solid fa-building"></i> Concessions
         </router-link>
       </li>
+      <li>
+        <router-link
+          to="/notifications"
+          class="text-white hover:text-gray-400 transition-colors"
+        >
+          <i class="fas fa-bell mr-2"></i> Notifications
+          <span
+            v-if="unreadNotifications.length"
+            class="bg-yellow-400 text-gray-800 ml-2 px-2 rounded-full text-sm"
+          >
+            {{ unreadNotifications.length }}
+          </span>
+        </router-link>
+      </li>
       <li v-if="user" class="border-t border-gray-700 pt-2 text-sm">
         <span class="text-white block">
           Connecté en tant que
