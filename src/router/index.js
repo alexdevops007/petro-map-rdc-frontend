@@ -95,6 +95,18 @@ const routes = [
       }
     },
   },
+  {
+    path: "/notifications",
+    name: "Notifications",
+    component: () => import("../views/NotificationsView.vue"),
+    beforeEnter: (to, from, next) => {
+      if (!store.state.auth.token) {
+        next("/login");
+      } else {
+        next();
+      }
+    },
+  },
 ];
 
 const router = createRouter({

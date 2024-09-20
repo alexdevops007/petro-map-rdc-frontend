@@ -57,5 +57,6 @@ export default {
     getConcessionById: (state) => (id) => {
       return state.concessions.find((concession) => concession._id === id);
     },
+    concessionCount: (state) => state.concessions.length,
   },
 };

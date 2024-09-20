@@ -53,4 +53,7 @@ export default {
       }
     },
   },
+  getters: {
+    userCount: (state) => state.users.length,
+  },
 };
