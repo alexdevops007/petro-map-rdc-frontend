@@ -49,6 +49,14 @@
         </li>
         <li>
           <router-link
+            to="/activities"
+            class="text-white hover:text-gray-400 transition-colors"
+          >
+            <i class="fa-solid fa-clock"></i> Activités
+          </router-link>
+        </li>
+        <li>
+          <router-link
             to="/notifications"
             class="text-white hover:text-gray-400 transition-colors"
           >
@@ -114,6 +122,14 @@
           class="block text-white hover:text-gray-400 transition-colors"
         >
           <i class="fa-solid fa-building"></i> Concessions
+        </router-link>
+      </li>
+      <li>
+        <router-link
+          to="/activities"
+          class="text-white hover:text-gray-400 transition-colors"
+        >
+          <i class="fa-solid fa-clock"></i> Activités
         </router-link>
       </li>
       <li>

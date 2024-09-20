@@ -6,7 +6,9 @@
       <!-- Section des statistiques -->
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
         <!-- Utilisateurs -->
-        <div class="bg-gray-800 p-6 rounded-lg shadow-lg flex items-center space-x-4">
+        <div
+          class="bg-gray-800 p-6 rounded-lg shadow-lg flex items-center space-x-4"
+        >
           <i class="fas fa-users text-4xl text-blue-400"></i>
           <div>
             <h2 class="text-xl font-semibold text-blue-300">Utilisateurs</h2>
@@ -21,7 +23,9 @@
         </div>
 
         <!-- Concessions -->
-        <div class="bg-gray-800 p-6 rounded-lg shadow-lg flex items-center space-x-4">
+        <div
+          class="bg-gray-800 p-6 rounded-lg shadow-lg flex items-center space-x-4"
+        >
           <i class="fas fa-building text-4xl text-green-400"></i>
           <div>
             <h2 class="text-xl font-semibold text-green-300">Concessions</h2>
@@ -36,7 +40,9 @@
         </div>
 
         <!-- Cartographie -->
-        <div class="bg-gray-800 p-6 rounded-lg shadow-lg flex items-center space-x-4">
+        <div
+          class="bg-gray-800 p-6 rounded-lg shadow-lg flex items-center space-x-4"
+        >
           <i class="fas fa-map-marked-alt text-4xl text-purple-400"></i>
           <div>
             <h2 class="text-xl font-semibold text-purple-300">Cartographie</h2>
@@ -51,11 +57,15 @@
         </div>
 
         <!-- Notifications -->
-        <div class="bg-gray-800 p-6 rounded-lg shadow-lg flex items-center space-x-4">
+        <div
+          class="bg-gray-800 p-6 rounded-lg shadow-lg flex items-center space-x-4"
+        >
           <i class="fas fa-bell text-4xl text-red-400"></i>
           <div>
             <h2 class="text-xl font-semibold text-red-300">Notifications</h2>
-            <p class="text-4xl font-bold text-white">{{ unreadNotificationCount }}</p>
+            <p class="text-4xl font-bold text-white">
+              {{ unreadNotifications.length }}
+            </p>
             <router-link
               to="/notifications"
               class="text-red-500 hover:underline mt-2 block text-sm"
@@ -68,7 +78,9 @@
 
       <!-- Section des dernières notifications -->
       <div class="bg-gray-800 p-6 rounded-lg shadow-lg">
-        <h2 class="text-2xl font-bold text-white mb-4">Dernières Notifications</h2>
+        <h2 class="text-2xl font-bold text-white mb-4">
+          Dernières Notifications
+        </h2>
         <ul class="divide-y divide-gray-700">
           <li
             v-for="notification in unreadNotifications.slice(0, 5)"
@@ -85,6 +97,28 @@
           </li>
         </ul>
       </div>
+
+      <!-- Section des dernières activités -->
+      <div class="bg-gray-800 p-6 rounded-lg shadow-lg">
+        <h2 class="text-2xl font-bold text-white mb-4">Dernières Activités</h2>
+        <div v-if="recentActivities.length > 0">
+          <ul class="divide-y divide-gray-700">
+            <li
+              v-for="activity in recentActivities.slice(0, 5)"
+              :key="activity._id"
+              class="flex justify-between py-3"
+            >
+              <span class="text-gray-300">{{ activity.message }}</span>
+              <span class="text-sm text-gray-400">{{
+                formatDate(activity.createdAt)
+              }}</span>
+            </li>
+          </ul>
+        </div>
+        <div v-else>
+          <p class="text-gray-400">Aucune activité récente.</p>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -98,16 +132,28 @@ export default {
     ...mapGetters("concessions", ["concessionCount"]),
     ...mapGetters("notification", [
       "unreadNotifications",
-      "unreadNotificationCount",
     ]),
+    ...mapGetters("activity", ["recentActivities"]), // Récupère les dernières activités depuis Vuex
   },
   methods: {
     ...mapActions("notification", ["markAsRead"]),
+    ...mapActions("activity", [
+      "fetchAllActivities",
+      "listenForActivities",
+    ]),
+    formatDate(date) {
+      return new Date(date).toLocaleString();
+    },
   },
   async mounted() {
     await this.$store.dispatch("notification/fetchNotifications");
     await this.$store.dispatch("concessions/fetchConcessions");
     await this.$store.dispatch("users/fetchUsers");
+    // Récupérer les activités initiales (par exemple, pour la concession avec ID = 1)
+    await this.$store.dispatch("activity/fetchAllActivities");
+
+    // Écouter les nouvelles activités en temps réel via Socket.IO
+    this.listenForActivities();
   },
 };
 </script>
@@ -160,5 +206,9 @@ export default {
 
 .text-gray-300 {
   color: #e2e8f0;
+}
+
+.text-gray-400 {
+  color: #cbd5e0;
 }
 </style>
