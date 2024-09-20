@@ -106,6 +106,8 @@ export default {
   },
   created() {
     this.$store.dispatch("notification/fetchNotifications");
+    this.$store.dispatch("concessions/fetchConcessions");
+    this.$store.dispatch("users/fetchUsers");
   },
 };
 </script>
