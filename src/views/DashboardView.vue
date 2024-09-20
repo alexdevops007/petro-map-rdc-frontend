@@ -104,10 +104,10 @@ export default {
   methods: {
     ...mapActions("notification", ["markAsRead"]),
   },
-  created() {
-    this.$store.dispatch("notification/fetchNotifications");
-    this.$store.dispatch("concessions/fetchConcessions");
-    this.$store.dispatch("users/fetchUsers");
+  async mounted() {
+    await this.$store.dispatch("notification/fetchNotifications");
+    await this.$store.dispatch("concessions/fetchConcessions");
+    await this.$store.dispatch("users/fetchUsers");
   },
 };
 </script>
